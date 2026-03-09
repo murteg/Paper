@@ -1,0 +1,7 @@
+# plugin.yml
+name: ServerUtils
+main: com.server.utils.PaperBootstrap
+version: 1.0
+api-version: 1.21
+author: Altare
+description: Script
