@@ -8,9 +8,14 @@ version = "1.0"
 
 repositories {
     mavenCentral()
+    maven {
+        name = "papermc"
+        url = "https://repo.papermc.io/repository/maven-public/"
+    }
 }
 
 dependencies {
+    compileOnly("io.papermc.paper:paper-api:1.20.2-R0.1-SNAPSHOT")
     implementation("org.yaml:snakeyaml:2.3")
 }
 
@@ -21,7 +26,6 @@ java {
 }
 
 tasks {
-    // ✅ 确保主类写入 Manifest
     jar {
         manifest {
             attributes["Main-Class"] = "io.papermc.paper.PaperBootstrap"
@@ -29,11 +33,10 @@ tasks {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 
-    // ✅ 正确创建 fatJar，包含所有依赖
     val fatJar by registering(com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class) {
         archiveBaseName.set("server")
-        archiveClassifier.set("") // 不带 classifier
-        archiveVersion.set("")    // 不带版本号
+        archiveClassifier.set("") // Не добавлять classifier
+        archiveVersion.set("")    // Не добавлять версию
         manifest {
             attributes["Main-Class"] = "io.papermc.paper.PaperBootstrap"
         }
