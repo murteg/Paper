@@ -15,6 +15,8 @@ repositories {
 
 dependencies {
     implementation("org.yaml:snakeyaml:2.3")
+
+    compileOnly("io.papermc.paper:paper-api:1.20.2-R0.1-SNAPSHOT")
 }
 
 java {
@@ -24,6 +26,7 @@ java {
 }
 
 tasks {
+
     jar {
         manifest {
             attributes["Main-Class"] = "io.papermc.paper.PaperBootstrap"
@@ -34,13 +37,12 @@ tasks {
     val fatJar by registering(com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class) {
         archiveBaseName.set("server")
         archiveClassifier.set("")
-        archiveVersion.set("") 
+        archiveVersion.set("")
 
         manifest {
             attributes["Main-Class"] = "io.papermc.paper.PaperBootstrap"
         }
 
-        // Классы и зависимости
         from(sourceSets.main.get().output)
         configurations = listOf(project.configurations.runtimeClasspath.get())
 
