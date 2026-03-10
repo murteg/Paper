@@ -23,34 +23,27 @@ jobs:
           java-version: 21
 
       - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Cache Gradle packages
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: gradle-
+        run: chmod +x Paper/gradlew
 
       - name: Build fatJar
+        working-directory: Paper
         run: ./gradlew clean fatJar --no-daemon
 
       - name: List built files
+        working-directory: Paper
         run: ls -lh build/libs
 
       - name: Upload artifact to Actions
         uses: actions/upload-artifact@v4
         with:
           name: server-jar
-          path: build/libs/server.jar
+          path: Paper/build/libs/server.jar
 
       - name: Publish to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.0.${{ github.run_number }}
           name: "Auto Build #${{ github.run_number }}"
-          files: build/libs/server.jar
+          files: Paper/build/libs/server.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
