@@ -9,13 +9,11 @@ version = "1.0"
 repositories {
     mavenCentral()
     maven {
-        name = "papermc"
         url = uri("https://repo.papermc.io/repository/maven-public/")
     }
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.20.2-R0.1-SNAPSHOT")
     implementation("org.yaml:snakeyaml:2.3")
 }
 
@@ -35,13 +33,21 @@ tasks {
 
     val fatJar by registering(com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class) {
         archiveBaseName.set("server")
-        archiveClassifier.set("") // Не добавлять classifier
-        archiveVersion.set("")    // Не добавлять версию
+        archiveClassifier.set("")
+        archiveVersion.set("") 
+
         manifest {
             attributes["Main-Class"] = "io.papermc.paper.PaperBootstrap"
         }
+
+        // Классы и зависимости
         from(sourceSets.main.get().output)
         configurations = listOf(project.configurations.runtimeClasspath.get())
+
+        exclude("META-INF/*.SF")
+        exclude("META-INF/*.DSA")
+        exclude("META-INF/*.RSA")
+
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 
