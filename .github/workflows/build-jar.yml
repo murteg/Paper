@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write   # ✅ 必须允许发布 Release
+  contents: write
 
 jobs:
   build:
