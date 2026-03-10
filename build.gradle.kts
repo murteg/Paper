@@ -10,7 +10,7 @@ repositories {
     mavenCentral()
     maven {
         name = "papermc"
-        url = "https://repo.papermc.io/repository/maven-public/"
+        url = uri("https://repo.papermc.io/repository/maven-public/")
     }
 }
 
