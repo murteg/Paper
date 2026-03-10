@@ -23,7 +23,7 @@ jobs:
           java-version: 21
 
       - name: Build fatJar
-        run: gradle clean fatJar --no-daemon
+        run: ./gradlew clean fatJar --no-daemon
 
       - name: List built files
         run: ls -lh build/libs
